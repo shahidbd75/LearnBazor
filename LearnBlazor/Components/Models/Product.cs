@@ -10,5 +10,7 @@
         public decimal Price { get; set; }
 
         public Boolean IsAvailable { get; set; }
+
+        public IEnumerable<ProductVarient> ProductVarients { get; set; }
     }
 }
