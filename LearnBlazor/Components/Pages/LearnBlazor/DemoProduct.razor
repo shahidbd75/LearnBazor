@@ -1,0 +1,78 @@
+﻿@page "/learnBlazure/demoProduct"
+<h3>Demo Product</h3>
+
+<div class="row">
+    @foreach(var product in products)
+    {
+        <div class="card float-start col-5 m-1 bg-light p-2">
+            <div>
+                <h5>@product.Name</h5>
+                <div>@product.Description</div>
+            </div>
+            <div class="card-body">
+                Price: @product.Price
+                Available: <input type="checkbox" class="form-check" @bind="product.IsAvailable" />
+
+                @if(@product.IsAvailable)
+                {
+                    <ul>
+                        @foreach(var varient in product.ProductVarients)
+                        {
+                            <li>@varient.Name</li>
+                        }
+                    </ul>
+                }
+            </div>
+            <div>
+                <button type="button" class="btn btn-danger" @onclick="()=> onDeleteProduct(product.Id)">Delete</button>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    List<Product> products = new();
+
+    protected override void OnInitialized()
+    {
+        this.products.Add(new Product
+            {
+                Id = 2,
+                Name = "Redmi Turbo 4 Pro",
+                Description = "This is a description of Redmi Turbo 4 Pro.",
+                Price = 43900m,
+                IsAvailable = true,
+                ProductVarients = new List<ProductVarient>
+            {
+                new ProductVarient { Id = 1, Name="Base", Value = "B"},
+                new ProductVarient { Id = 2, Name="Pro", Value = "P"},
+            }
+            });
+
+        this.products.Add(new Product
+            {
+                Id = 3,
+                Name = "Honor 400",
+                Description = "This product release on May, 2025.",
+                Price = 46999m,
+                IsAvailable = true,
+                ProductVarients = new List<ProductVarient>
+            {
+                new ProductVarient { Id = 1, Name="Base", Value = "B"},
+                new ProductVarient { Id = 2, Name="Pro", Value = "P"},
+                new ProductVarient { Id = 3, Name="Light", Value = "L"},
+            }
+            });
+
+        base.OnInitialized();
+    }
+
+    private void onDeleteProduct(int productId)
+    {
+        var product = this.products.FirstOrDefault(p => p.Id == productId);
+        if(product != null)
+        {
+            this.products.Remove(product);
+        }        
+    }
+}
