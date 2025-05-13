@@ -1,13 +1,22 @@
-﻿<div class="alert alert-info">
+﻿<div class="alert alert-info m-1">
     @Title
 </div>
 
 @if (ChildContent != null)
 {
-    <div class="alert alert-warning">
+    <div class="alert alert-warning m-1">
         @ChildContent(Title)
     </div>
 }
+
+@if (ChildOtherContent != null)
+{
+    <div class="alert alert-primary m-1">
+        @ChildOtherContent(Title)
+    </div>
+}
+
+<button type="button" class="btn btn-sm btn-info" @onclick="OnShowButtonClick">Show Message</button>
 
 @code {
     [Parameter]
@@ -15,4 +24,10 @@
 
     [Parameter]
     public RenderFragment<string> ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment<string> ChildOtherContent { get; set; }
+
+    [Parameter]
+    public EventCallback OnShowButtonClick { get; set; }
 }

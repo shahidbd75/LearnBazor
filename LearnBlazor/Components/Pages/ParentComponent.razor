@@ -1,13 +1,28 @@
 ﻿@page "/parent"
 <h3>Parent Component</h3>
 
-<_ChildComponent Title="This is child page title 1">
+<_ChildComponent Title="This is child page title 1" OnShowButtonClick="ShowMessage">
     This is readonly and comes from Render Fragment
 </_ChildComponent>
 
-<_ChildComponent Title="This is child page title 2">
+<_ChildComponent Title="This is child page title 2" OnShowButtonClick="ShowMessage">
+    <ChildContent>
+        This is from Child Content.
+    </ChildContent>
+    <ChildOtherContent>
+        <p class="text-bg-light">This is from other content.</p>
+    </ChildOtherContent>
 </_ChildComponent>
 
-@code {
+<div class="text-bg-dark">
+    @ConfirmationMessage
+</div>
 
+@code {
+    public string ConfirmationMessage { get; set; } = string.Empty;
+
+    private void ShowMessage()
+    {
+        this.ConfirmationMessage = "This is a message from Parent Component.";
+    }
 }
