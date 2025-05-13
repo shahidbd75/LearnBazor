@@ -1,0 +1,51 @@
+﻿<div class="card float-start col-5 m-1 bg-light p-2" @onclick="() =>ProductSelected(Product.Name)">
+    <div>
+        <h5>@Product.Name</h5>
+        <div>@Product.Description</div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id=@Product.Id @onchange="CompareUpdated">
+            <label class="form-check-label" for=@Product.Id>
+                Add to Compare
+            </label>
+        </div>
+    </div>
+    <div class="card-body">
+        Price: @Product.Price
+        Available: <input type="checkbox" class="form-check" @bind="Product.IsAvailable" />
+
+        @if (@Product.IsAvailable)
+        {
+            <ul>
+                @foreach (var varient in Product.ProductVarients)
+                {
+                    <li>@varient.Name</li>
+                }
+            </ul>
+        }
+    </div>
+    <div>
+        <_DeleteButtonComponent ProductId="@Product.Id"></_DeleteButtonComponent>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Product Product { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnCompareUpdated { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnProductSelected { get; set; }
+
+    private async Task CompareUpdated(ChangeEventArgs args)
+    {
+        await this.OnCompareUpdated.InvokeAsync((bool)(args.Value ?? false));
+    }
+
+    private async Task ProductSelected(string ProductName)
+    {
+        await this.OnProductSelected.InvokeAsync(ProductName);
+    }
+}

@@ -1,37 +1,27 @@
 ﻿@page "/learnBlazure/demoProduct"
 <h3>Demo Product</h3>
 
+<p class="badge text-bg-primary">Added to compare: @CompareCount</p>
+<ul class="list-group">
+    @foreach(var productName in selectedProducts)
+    {
+        <li class="list-group-item">@productName</li>
+    }
+</ul>
+
 <div class="row">
     @foreach(var product in products)
     {
-        <div class="card float-start col-5 m-1 bg-light p-2">
-            <div>
-                <h5>@product.Name</h5>
-                <div>@product.Description</div>
-            </div>
-            <div class="card-body">
-                Price: @product.Price
-                Available: <input type="checkbox" class="form-check" @bind="product.IsAvailable" />
-
-                @if(@product.IsAvailable)
-                {
-                    <ul>
-                        @foreach(var varient in product.ProductVarients)
-                        {
-                            <li>@varient.Name</li>
-                        }
-                    </ul>
-                }
-            </div>
-            <div>
-                <button type="button" class="btn btn-danger" @onclick="()=> onDeleteProduct(product.Id)">Delete</button>
-            </div>
-        </div>
+        <_ProductComponent Product="@product" OnCompareUpdated="CompareCountChange" OnProductSelected="ProductSelected"></_ProductComponent>
     }
 </div>
 
 @code {
     List<Product> products = new();
+
+    List<string> selectedProducts = new();
+
+    public int CompareCount { get; set; } = 0;
 
     protected override void OnInitialized()
     {
@@ -74,5 +64,29 @@
         {
             this.products.Remove(product);
         }        
+    }
+
+    protected void CompareCountChange(Boolean isSelected)
+    {
+        if(isSelected)
+        {
+            this.CompareCount++;
+        }
+        else
+        {
+            this.CompareCount--;
+        }
+    }
+
+    protected void ProductSelected(string productName)
+    {
+        if(this.selectedProducts.Contains(productName))
+        {
+            this.selectedProducts.Remove(productName);
+        }
+        else
+        {
+            this.selectedProducts.Add(productName);
+        }
     }
 }
