@@ -16,6 +16,8 @@
     </div>
 }
 
+<_GrandChildComponent GrandChildMessage="@GrandChildMessage"></_GrandChildComponent>
+
 <button type="button" class="btn btn-sm btn-info" @onclick="OnShowButtonClick">Show Message</button>
 
 @code {
@@ -27,6 +29,9 @@
 
     [Parameter]
     public RenderFragment<string> ChildOtherContent { get; set; }
+
+    [Parameter]
+    public string? GrandChildMessage { get; set; }
 
     [Parameter]
     public EventCallback OnShowButtonClick { get; set; }

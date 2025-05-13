@@ -1,0 +1,12 @@
+﻿@if (GrandChildMessage is not null)
+{
+    <div class="alert alert-danger">
+        @GrandChildMessage
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public string? GrandChildMessage { get; set; }
+}
