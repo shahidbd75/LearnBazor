@@ -5,8 +5,13 @@
     </div>
 }
 
+<p class="alert alert-success">Tracking Number: @TrackingNumber</p>
+
 
 @code {
-    [Parameter]
+    [CascadingParameter(Name = "Message")]
     public string? GrandChildMessage { get; set; }
+
+    [CascadingParameter(Name = "TrackingNumber")]
+    private string TrackingNumber { get; set; }
 }
