@@ -1,0 +1,18 @@
+﻿<div class="alert alert-info">
+    @Title
+</div>
+
+@if (ChildContent != null)
+{
+    <div class="alert alert-warning">
+        @ChildContent(Title)
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment<string> ChildContent { get; set; }
+}
