@@ -1,0 +1,18 @@
+﻿@page "/learnroute"
+@page "/learnroute/{TransactionId:int}/{Status}"
+@page "/learnroute/{TransactionId:int}"
+@page "/learnblazor/learnroute"
+
+<h3>Learning Route</h3>
+
+Transaction Id: <div class="badge bg-info">@TransactionId</div>
+<br />
+Status: <div class="badge bg-success">@Status</div>
+
+@code {
+    [Parameter]
+    public int? TransactionId { get; set; }
+
+    [Parameter]
+    public string? Status { get; set; }
+}
