@@ -4,6 +4,8 @@
 @page "/learnblazor/learnroute"
 @page "/learnroute/catch-all/{*PageParameters}"
 
+@inject NavigationManager _navigationManager
+
 <h3>Learning Route</h3>
 
 Transaction Id: <div class="badge bg-info">@TransactionId</div>
@@ -14,6 +16,24 @@ Status: <div class="badge bg-success">@Status</div>
     Page Parameters: @PageParameters
 </div>
 
+<a href="learnroute?country=bd&state=rajshahi" class="btn btn-link">Navigate with Query Parameter</a>
+<button class="btn btn-sm btn-info" @onclick="NavigateWithQueryParam">Navigate From Code</button>
+<button class="btn btn-sm btn-success" @onclick="LoadParameters">Load Parameters</button>
+<br />
+<div class="bg-light" style="height:1000px;">
+    <div class="alert alert-primary">
+        Country: <div class="badge bg-secondary">@Country</div>
+        <br />
+        State: <div class="badge bg-warning">@State</div>
+        <br />
+        PostalCode : @PostalCode
+        <br />
+        RoadNo : @RoadNo
+    </div>
+</div>
+
+<h2 id="targetElement">Main Title</h2>
+
 @code {
     [Parameter]
     public int? TransactionId { get; set; }
@@ -23,4 +43,38 @@ Status: <div class="badge bg-success">@Status</div>
 
     [Parameter]
     public string? PageParameters { get; set; }
+
+    [Parameter]
+    public string? Country { get; set; }
+
+    [Parameter]
+    public string? State { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string? PostalCode { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string? RoadNo { get; set; }
+
+    private void LoadParameters()
+    {
+        var uri = new Uri(_navigationManager.Uri);
+
+        var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
+
+        if(query is not null && query.Count > 0)
+        {
+            this.Country = query["country"];
+            this.State = query["state"];
+        }  
+        else
+        {
+            _navigationManager.Refresh(forceReload: true);
+        }
+    }
+
+    private void NavigateWithQueryParam()
+    {
+        _navigationManager.NavigateTo("learnroute?country=bd&state=rajshahi");
+    }
 }
