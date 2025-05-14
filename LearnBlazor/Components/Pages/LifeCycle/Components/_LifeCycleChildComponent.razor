@@ -1,0 +1,19 @@
+﻿<div class="card">
+    <div class="card-body">
+        <ul class="list-group">
+            @foreach (var evnt in LifeCycleEvents)
+            {
+                <li class="list-group-item">@evnt</li>
+            }
+        </ul>
+    </div>
+</div>
+
+@code {
+    private List<string> LifeCycleEvents = new();
+    protected override void OnInitialized()
+    {
+        this.LifeCycleEvents.Add("Child: OnInitialized have been called");
+        base.OnInitialized();
+    }
+}
