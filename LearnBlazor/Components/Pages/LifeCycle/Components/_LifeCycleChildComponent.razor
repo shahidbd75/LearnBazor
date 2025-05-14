@@ -11,9 +11,25 @@
 
 @code {
     private List<string> LifeCycleEvents = new();
+
+    [Parameter]
+    public int CounterValue { get; set; }
+
     protected override void OnInitialized()
     {
         this.LifeCycleEvents.Add("Child: OnInitialized have been called");
         base.OnInitialized();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await Task.Delay(1500);
+        this.LifeCycleEvents.Add("Child: OnParametersSetAsync have been called");
+    }
+
+    protected override void OnParametersSet()
+    {
+        this.LifeCycleEvents.Add("Child: OnParametersSet have been called");
+        base.OnParametersSet();
     }
 }

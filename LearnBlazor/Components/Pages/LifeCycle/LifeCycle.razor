@@ -9,7 +9,7 @@
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 <div class="text-bg-light">
-    <_LifeCycleChildComponent></_LifeCycleChildComponent>
+    <_LifeCycleChildComponent CounterValue=@currentCount></_LifeCycleChildComponent>
     <ul class="list-group">
         @foreach (var evnt in LifeCycleEvents)
         {
@@ -38,5 +38,17 @@
     {
         await Task.Delay(1000);
         this.LifeCycleEvents.Add("Parent: OnInitializedAsync have been called");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await Task.Delay(1500);
+        this.LifeCycleEvents.Add("Parent: OnParametersSetAsync have been called");
+    }
+
+    protected override void OnParametersSet()
+    {
+        this.LifeCycleEvents.Add("Parent: OnParametersSet have been called");
+        base.OnParametersSet();
     }
 }
