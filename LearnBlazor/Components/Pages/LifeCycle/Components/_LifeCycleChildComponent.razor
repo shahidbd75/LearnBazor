@@ -32,4 +32,10 @@
         this.LifeCycleEvents.Add("Child: OnParametersSet have been called");
         base.OnParametersSet();
     }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        this.LifeCycleEvents.Add("Child: OnAfterRender have been called");
+        base.OnAfterRender(firstRender);
+    }
 }
