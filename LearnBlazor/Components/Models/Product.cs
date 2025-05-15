@@ -1,9 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.VisualBasic;
+using System.ComponentModel.DataAnnotations;
 
 namespace LearnBlazor.Components.Models
 {
     public class Product
     {
+
+        public Product()
+        {
+            OfferEnd = DateOnly.FromDateTime(DateTime.Now);
+        }
         public int Id { get; set; }
 
         [Required]
@@ -18,7 +24,7 @@ namespace LearnBlazor.Components.Models
 
         public IEnumerable<ProductVarient> ProductVarients { get; set; }
 
-        public Category Catergory { get; set; }
+        public Category Category { get; set; }
 
         public DateOnly OfferEnd { get; set; }
     }
