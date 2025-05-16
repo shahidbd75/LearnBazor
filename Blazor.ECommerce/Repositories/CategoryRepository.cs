@@ -1,50 +1,54 @@
 ﻿using Blazor.ECommerce.Data;
 using Blazor.ECommerce.Repositories.IRepositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blazor.ECommerce.Repositories 
 {
     public class CategoryRepository(ApplicationDbContext context) : ICategoryRepository
     {
-        public Category Create(Category entity)
+
+        public async Task<Category> CreateAsync(Category entity)
         {
-            context.Categories.Add(entity);
-            context.SaveChanges();
+            await context.Categories.AddAsync(entity);
+
+            await context.SaveChangesAsync();
+
             return entity;
         }
 
-        public bool Delete(Category entity)
+        public async Task<bool> DeleteAsync(Category entity)
         {
-            var each = context.Categories.Find(entity.Id);
+            var each = await context.Categories.FindAsync(entity.Id);
 
-            if(each != null)
+            if (each != null)
             {
                 context.Categories.Remove(each);
-                return context.SaveChanges() > 0;
+                return await context.SaveChangesAsync() > 0;
             }
 
             return false;
         }
 
-        public Category Get(int id)
+        public async Task<IEnumerable<Category>> GetAllAsync()
         {
-            return context.Categories.Find(id) ?? new Category();
+            return await context.Categories.ToListAsync();
         }
 
-        public IEnumerable<Category> GetAll()
+        public async Task<Category> GetAsync(int id)
         {
-            return context.Categories.ToList();
+            return await context.Categories.FindAsync(id) ?? new Category();
         }
 
-        public Category Update(Category entity)
+        public async Task<Category> UpdateAsync(Category entity)
         {
-            var each = context.Categories.Find(entity.Id);
+            var each = await context.Categories.FindAsync(entity.Id);
 
             if (each != null)
             {
                 each.Name = entity.Name;
                 context.Categories.Update(each);
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
 
                 return each;
             }

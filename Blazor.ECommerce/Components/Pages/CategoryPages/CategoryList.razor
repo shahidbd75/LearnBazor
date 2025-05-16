@@ -54,13 +54,13 @@
     {
         IsLoading = true;
 
-        await Task.Yield();
-        this.LoadCategories();
+        await this.LoadCategories();
+
         IsLoading = false;
     }
 
-    private void LoadCategories()
+    private async Task LoadCategories()
     {
-        this.Categories = this.categoryRepository.GetAll();
+        this.Categories = await this.categoryRepository.GetAllAsync();
     }
 }

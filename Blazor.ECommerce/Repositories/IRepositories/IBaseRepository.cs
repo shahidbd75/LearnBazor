@@ -2,12 +2,11 @@
 {
     public interface IBaseRepository<T, TId> 
     {
-        T Create(T entity);
-        T Update(T entity);
+        Task<T> CreateAsync(T entity);
+        Task<T> UpdateAsync(T entity);
 
-        bool Delete(T entity);
-        T Get(TId id);
-        IEnumerable<T> GetAll();
-
+        Task<bool> DeleteAsync(T entity);
+        Task<T> GetAsync(TId id);
+        Task<IEnumerable<T>> GetAllAsync();
     }
 }
