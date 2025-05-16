@@ -1,6 +1,8 @@
 using Blazor.ECommerce.Components;
 using Blazor.ECommerce.Components.Account;
 using Blazor.ECommerce.Data;
+using Blazor.ECommerce.Repositories;
+using Blazor.ECommerce.Repositories.IRepositories;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +17,8 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 builder.Services.AddAuthentication(options =>
     {
