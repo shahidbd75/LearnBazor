@@ -1,0 +1,27 @@
+﻿@page "/parent"
+<h3>Parent Component</h3>
+
+<CascadingValue Value="@GrandChildMessage" Name="Message">
+    <CascadingValue Value="@TrackingNumber" Name="TrackingNumber">
+        <_ChildComponent Title="This is child page title 1" OnShowButtonClick="ShowMessage">
+            This is readonly and comes from Render Fragment
+        </_ChildComponent>
+    </CascadingValue>
+</CascadingValue>
+
+<div class="text-bg-dark">
+    @ConfirmationMessage
+</div>
+
+@code {
+    public string ConfirmationMessage { get; set; } = string.Empty;
+
+    private string GrandChildMessage { get; set; } = "This message from Parent to Grand Child using Cascading Parameter.";
+
+    private string TrackingNumber { get; set; } = "TPN2023949483";
+
+    private void ShowMessage()
+    {
+        this.ConfirmationMessage = "This is a message from Parent Component.";
+    }
+}

@@ -1,0 +1,120 @@
+﻿@page "/learnBlazure/propBinding"
+
+<div class="row">
+    <div class="col-6 border p-3">
+        <h3 class="text-primary">Product Playground</h3>
+        <br />
+        <p>Update Status: <input type="checkbox" @bind="@product.IsAvailable" class="form-check" /></p>
+        <p>Update Price: <input type="number" @bind-value="@product.Price" class="form-control form-control-sm" @bind-value:event="oninput" /></p>
+        <p>Product Variant:</p>
+        <select class="form-select" @bind="@selectedVarient">
+            @foreach (var variant in product.ProductVarients)
+            {
+                <option value="@variant.Value">@variant.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-6 border p-3">
+        <h3 class="text-primary">Product Summery</h3>
+        <br/>
+        <h4>@product.Name</h4>
+        <p>Description: @product.Description</p>
+        <p>Price: @product.Price</p>
+        <p>Product Status: @(product.IsAvailable == true ? "Available" : "Not available")</p>
+        <p> Selected Varient Value: @selectedVarient</p>
+        <p> Selected Varient: @product.ProductVarients.FirstOrDefault(v => v.Value == selectedVarient)?.Name</p>
+    </div>
+
+    <div class="col-12 p-4">
+        <h3 class="text-success">Product Table</h3>
+        <table class="table table-sm table-striped table-bordered mt-2">
+            <thead class="text-bg-primary">
+                <tr class="text-bg-dark">
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Available</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in products)
+                {
+                    <tr>
+                        <td><input type="text" class="form-control form-control-sm" @bind="@product.Name" @bind:event="oninput" /></td>
+                        <td><input type="text" class="form-control form-control-sm" @bind="@product.Description" @bind:event="oninput" /></td>
+                        <td><input type="number" class="form-control form-control-sm" @bind="@product.Price" @bind:event="oninput" /></td>
+                        <td><input type="checkbox" @bind="@product.IsAvailable" class="form-check" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12 p-3">
+        <h2 class="text-info">Product Summery</h2>
+        @foreach(var each in products) {
+            <div class="card">
+                <p class="card-title">@each.Name</p>
+                <div class="card-body">
+                    Price: @each.Price<br />
+                    Available: @(each.IsAvailable ? "Available" : "Unavailable")
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+@code {
+    string selectedVarient = "";
+
+    List<Product> products = new();
+
+    Product product = new Product
+        {
+            Id = 1,
+            Name = "iPhone 16",
+            Description = "This is a description of Moko 64GB.",
+            Price = 19.99m,
+            IsAvailable = true,
+            ProductVarients = new List<ProductVarient>
+            {
+                new ProductVarient { Id = 1, Name="Base", Value = "B"},
+                new ProductVarient { Id = 2, Name="Pro", Value = "P"},
+                new ProductVarient { Id = 3, Name="Pro Max", Value = "PM"},
+            }
+        };
+
+    protected override void OnInitialized()
+    {
+        this.products.Add(new Product
+            {
+                Id = 2,
+                Name = "Redmi Turbo 4 Pro",
+                Description = "This is a description of Redmi Turbo 4 Pro.",
+                Price = 43900m,
+                IsAvailable = true,
+                ProductVarients = new List<ProductVarient>
+            {
+                new ProductVarient { Id = 1, Name="Base", Value = "B"},
+                new ProductVarient { Id = 2, Name="Pro", Value = "P"},
+            }
+            });
+
+        this.products.Add(new Product
+            {
+                Id = 3,
+                Name = "Honor 400",
+                Description = "This product release on May, 2025.",
+                Price = 46999m,
+                IsAvailable = true,
+                ProductVarients = new List<ProductVarient>
+            {
+                new ProductVarient { Id = 1, Name="Base", Value = "B"},
+                new ProductVarient { Id = 2, Name="Pro", Value = "P"},
+            }
+            });
+
+        base.OnInitialized();
+    }
+}

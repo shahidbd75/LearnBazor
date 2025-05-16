@@ -1,0 +1,92 @@
+﻿@page "/learnBlazure/demoProduct"
+<h3>Demo Product</h3>
+
+<p class="badge text-bg-primary">Added to compare: @CompareCount</p>
+<ul class="list-group">
+    @foreach(var productName in selectedProducts)
+    {
+        <li class="list-group-item">@productName</li>
+    }
+</ul>
+
+<div class="row">
+    @foreach(var product in products)
+    {
+        <_ProductComponent Product="@product" OnCompareUpdated="CompareCountChange" OnProductSelected="ProductSelected"></_ProductComponent>
+    }
+</div>
+
+@code {
+    List<Product> products = new();
+
+    List<string> selectedProducts = new();
+
+    public int CompareCount { get; set; } = 0;
+
+    protected override void OnInitialized()
+    {
+        this.products.Add(new Product
+            {
+                Id = 2,
+                Name = "Redmi Turbo 4 Pro",
+                Description = "This is a description of Redmi Turbo 4 Pro.",
+                Price = 43900m,
+                IsAvailable = true,
+                ProductVarients = new List<ProductVarient>
+            {
+                new ProductVarient { Id = 1, Name="Base", Value = "B"},
+                new ProductVarient { Id = 2, Name="Pro", Value = "P"},
+            }
+            });
+
+        this.products.Add(new Product
+            {
+                Id = 3,
+                Name = "Honor 400",
+                Description = "This product release on May, 2025.",
+                Price = 46999m,
+                IsAvailable = true,
+                ProductVarients = new List<ProductVarient>
+            {
+                new ProductVarient { Id = 1, Name="Base", Value = "B"},
+                new ProductVarient { Id = 2, Name="Pro", Value = "P"},
+                new ProductVarient { Id = 3, Name="Light", Value = "L"},
+            }
+            });
+
+        base.OnInitialized();
+    }
+
+    private void onDeleteProduct(int productId)
+    {
+        var product = this.products.FirstOrDefault(p => p.Id == productId);
+        if(product != null)
+        {
+            this.products.Remove(product);
+        }        
+    }
+
+    protected void CompareCountChange(Boolean isSelected)
+    {
+        if(isSelected)
+        {
+            this.CompareCount++;
+        }
+        else
+        {
+            this.CompareCount--;
+        }
+    }
+
+    protected void ProductSelected(string productName)
+    {
+        if(this.selectedProducts.Contains(productName))
+        {
+            this.selectedProducts.Remove(productName);
+        }
+        else
+        {
+            this.selectedProducts.Add(productName);
+        }
+    }
+}

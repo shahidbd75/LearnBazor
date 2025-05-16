@@ -1,0 +1,95 @@
+﻿@page "/lifecycle"
+
+@using System.Threading
+
+<PageTitle>Life Cycle</PageTitle>
+
+<h3 class="text-primary">Blazor LifeCycle</h3>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+<p>
+    Time Count: @count <br />
+    <button class="btn btn-primary" @onclick="StartCountDown">Start Count Down</button>
+</p>
+
+<div class="text-bg-light">
+    <_LifeCycleChildComponent CounterValue=@currentCount></_LifeCycleChildComponent>
+    <ul class="list-group">
+        @foreach (var evnt in LifeCycleEvents)
+        {
+            <li class="list-group list-group-item-info">@evnt</li>
+        }
+    </ul>
+</div>
+
+@code {
+    private int currentCount = 0;
+
+    private int count = 5;
+
+    private List<string> LifeCycleEvents = new();
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    protected override void OnInitialized()
+    {
+        this.LifeCycleEvents.Add("Parent: OnInitialized have been called");
+        base.OnInitialized();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1000);
+        this.LifeCycleEvents.Add("Parent: OnInitializedAsync have been called");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await Task.Delay(1500);
+        this.LifeCycleEvents.Add("Parent: OnParametersSetAsync have been called");
+    }
+
+    protected override void OnParametersSet()
+    {
+        this.LifeCycleEvents.Add("Parent: OnParametersSet have been called");
+        base.OnParametersSet();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if(firstRender)
+        {
+            this.currentCount = 100;
+        } else
+        {
+            this.currentCount = 200;
+        }
+        this.LifeCycleEvents.Add("Parent: OnAfterRender have been called");
+    }
+
+    protected override bool ShouldRender()
+    {
+        this.LifeCycleEvents.Add("Parent: ShouldRender have been called");
+        return true;
+    }
+
+    private void StartCountDown()
+    {
+        var timer = new Timer(this.TimerCallback, null, 1000, 1000);
+    }
+
+    private void TimerCallback(object state)
+    {
+        if(count > 0)
+        {
+            count--;
+            InvokeAsync(StateHasChanged);
+        }
+    }
+}

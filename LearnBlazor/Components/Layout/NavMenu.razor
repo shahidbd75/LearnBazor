@@ -1,6 +1,6 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">LearnBlazor</a>
+        <a class="navbar-brand" href="">Learn Blazor</a>
     </div>
 </div>
 
@@ -25,10 +25,47 @@
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
             </NavLink>
         </div>
+
         <div class="nav-item px-3">
-            <a class="nav-link" href="/learnBlazure/propBinding">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Product Detail
-            </a>
+            <NavLink class="nav-link" href="/learnBlazure/propBinding">
+                <span class="bi bi-collection-fill" aria-hidden="true"></span> Product Detail
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/learnBlazure/demoProduct">
+                <span class="bi bi-basket3-fill" aria-hidden="true"></span> Demo Product
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/parent">
+                <span class="bi bi-app" aria-hidden="true"></span> Parent/Child
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/learnroute#targetElement" Match="NavLinkMatch.Prefix">
+                <span class="bi bi-arrow-left-right" aria-hidden="true"></span> Learn Route
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/learnroute?PostalCode=6500&RoadNo=465" Match="NavLinkMatch.Prefix">
+                <span class="bi bi-arrow-left-right" aria-hidden="true"></span> Route(Query Param)
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/lifecycle" Match="NavLinkMatch.Prefix">
+                <span class="bi bi-arrow-clockwise" aria-hidden="true"></span> Life Cycle
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/product-forms">
+                <span class="bi bi-arrow-clockwise" aria-hidden="true"></span> Product Forms
+            </NavLink>
         </div>
     </nav>
 </div>
