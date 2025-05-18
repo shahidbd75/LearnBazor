@@ -1,4 +1,4 @@
-﻿@page "/category"
+﻿ @page "/category"
 
 
 @inject ICategoryRepository categoryRepository;
@@ -42,25 +42,37 @@
                 </tbody>
             </table>
         </div>
+        @if (ShowMessage == true)
+        {
+            <p>Edited Successfully.</p>
+        }
     </div>
 }
 
 @code {
-    public bool IsLoading { get; set; } = false;
+    public bool IsLoading { get; set; } = true;
+
+    private Boolean ShowMessage { get; set; } = false;
 
     private IEnumerable<Category> Categories = new List<Category>();
 
     protected override async Task OnInitializedAsync()
     {
-        IsLoading = true;
 
-        await this.LoadCategories();
-
-        IsLoading = false;
     }
 
     private async Task LoadCategories()
     {
         this.Categories = await this.categoryRepository.GetAllAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            await this.LoadCategories();
+            IsLoading = false;
+            StateHasChanged();
+        } 
     }
 }
