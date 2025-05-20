@@ -1,8 +1,10 @@
 ﻿@page "/category/create";
 @page "/category/update/{Id:int}"
 
+
 @inject ICategoryRepository categoryRepository;
 @inject NavigationManager navigationManager;
+@inject IJSRuntime jsRuntime;
 
 @if (IsLoading)
 {
@@ -78,10 +80,12 @@ else
         if(Id > 0)
         {
             await categoryRepository.UpdateAsync(Category);
+            await this.jsRuntime.ToastrSuccess("Category Updated Successfully");
         }
         else
         {
             await categoryRepository.CreateAsync(Category);
+            await this.jsRuntime.ToastrSuccess("Category Created Successfully");
         }
 
         IsLoading = false;
