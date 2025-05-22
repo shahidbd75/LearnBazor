@@ -16,13 +16,13 @@ namespace Blazor.ECommerce.Repositories
             return entity;
         }
 
-        public async Task<bool> DeleteAsync(Category entity)
+        public async Task<bool> DeleteAsync(int Id)
         {
-            var each = await context.Categories.FindAsync(entity.Id);
+            var entity = await context.Categories.FindAsync(Id);
 
-            if (each != null)
+            if (entity != null)
             {
-                context.Categories.Remove(each);
+                context.Categories.Remove(entity);
                 return await context.SaveChangesAsync() > 0;
             }
 
