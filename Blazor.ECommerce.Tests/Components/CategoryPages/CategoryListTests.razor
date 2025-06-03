@@ -1,0 +1,13 @@
+﻿@* @code {
+
+    [Fact]
+    public void RenderLoadingWhenISLoadingTrue()
+    {
+        using var ctx = new TestContext();
+
+        var cut = ctx.Render(@<CategoryList />);
+
+        cut.MarkupMatches("<div class=\"position-absolute w-75 h-75 d-flex flex-column align-items-center bg-white justify-content-center\"><img src=\"images/loading.gif\" alt=\"Loading...\" class=\"img-fluid\" /></div>");
+
+    }
+} *@

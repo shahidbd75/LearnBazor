@@ -1,0 +1,11 @@
+﻿@code {
+    [Fact]
+    public void RenderHelloWorld()
+    {
+        using var ctx = new TestContext();
+
+        var cut = ctx.Render(@<Home />);
+
+        cut.MarkupMatches("<h1>Home</h1><h4>Get 50% Off.</h4>");
+    }
+}
