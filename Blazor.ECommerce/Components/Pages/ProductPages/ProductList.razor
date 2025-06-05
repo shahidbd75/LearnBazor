@@ -30,7 +30,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Price</th>
-                        <th>Special Tag</th>
+                        <th class="text-center">Special Tag</th>
                         <th>Category</th>
                         <th></th>
                     </tr>
@@ -41,7 +41,7 @@
                         <tr>
                             <td>@cat.Name</td>
                             <td>@cat.Price</td>
-                            <td>@cat.SpecialTag</td>
+                            <td class="text-center"><span class="badge bg-success">@cat.SpecialTag</span></td>
                             <td>@cat.Category?.Name</td>
                             <td>
                                 <a class="btn btn-sm btn-info" href=@($"product/update/{@cat.Id}")><i class="bi bi-pencil-square"></i> Edit</a>

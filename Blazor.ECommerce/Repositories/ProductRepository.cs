@@ -4,26 +4,42 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blazor.ECommerce.Repositories 
 {
-    public class ProductRepository(ApplicationDbContext context) : IProductRepository
+    public class ProductRepository : IProductRepository
     {
+        private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public ProductRepository(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+        {
+            _context = context;
+            _webHostEnvironment = webHostEnvironment;
+        }
 
         public async Task<Product> CreateAsync(Product entity)
         {
-            await context.Products.AddAsync(entity);
+            await _context.Products.AddAsync(entity);
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return entity;
         }
 
         public async Task<bool> DeleteAsync(int Id)
         {
-            var entity = await context.Products.FindAsync(Id);
+            var entity = await _context.Products.FindAsync(Id);
+
+            var relativeFileLocation = entity.ImageUrl.TrimStart('/').Replace("/", "\\");
+            var fileLocation = Path.Combine(_webHostEnvironment.WebRootPath, relativeFileLocation);
+
+            if (File.Exists(fileLocation))
+            {
+                File.Delete(fileLocation);
+            }
 
             if (entity != null)
             {
-                context.Products.Remove(entity);
-                return await context.SaveChangesAsync() > 0;
+                _context.Products.Remove(entity);
+                return await _context.SaveChangesAsync() > 0;
             }
 
             return false;
@@ -31,17 +47,17 @@ namespace Blazor.ECommerce.Repositories
 
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            return await context.Products.ToListAsync();
+            return await _context.Products.Include(p=>p.Category).ToListAsync();
         }
 
         public async Task<Product> GetAsync(int id)
         {
-            return await context.Products.FindAsync(id) ?? new Product();
+            return await _context.Products.FindAsync(id) ?? new Product();
         }
 
         public async Task<Product> UpdateAsync(Product entity)
         {
-            var each = await context.Products.FindAsync(entity.Id);
+            var each = await _context.Products.FindAsync(entity.Id);
 
             if (each == null) return new Product();
 
@@ -52,9 +68,9 @@ namespace Blazor.ECommerce.Repositories
             each.CategoryId = entity.CategoryId;
             each.ImageUrl = entity.ImageUrl;
 
-            context.Products.Update(each);
+            _context.Products.Update(each);
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return each;
 
