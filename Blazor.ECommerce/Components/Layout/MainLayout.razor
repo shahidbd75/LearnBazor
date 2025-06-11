@@ -1,14 +1,18 @@
-﻿@inherits LayoutComponentBase
+﻿@using Blazor.ECommerce.Constants
+@inherits LayoutComponentBase
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+    <AuthorizeView Roles="@RoleData.Admin">
+        <div class="sidebar">
+            <NavMenu/>
+        </div>
+    </AuthorizeView>
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+        @if (_IsNavbarVisible)
+        {
+            <NavBar/>
+        }
 
         <article class="content px-4">
             @Body
