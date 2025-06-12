@@ -15,6 +15,11 @@
                         <span class="bi bi-house-door" aria-hidden="true"></span> Home
                     </NavLink>
                 </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="cart" >
+                        <span class="bi bi-cart3" aria-hidden="true"></span> Cart
+                    </NavLink>
+                </li>
             </ul>
             <ul class="d-flex navbar-nav mb-2 mb-md-0">
                 <AuthorizeView>
@@ -36,12 +41,12 @@
                     </Authorized>
                     <NotAuthorized>
                     <li class="nav-item">
-                        <NavLink class="nav-link" href="Account/Register">
+                        <NavLink class="nav-link btn btn-outline-secondary" href="Account/Register">
                             <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
                         </NavLink>
                     </li>
                     <li class="nav-item">
-                        <NavLink class="nav-link btn btn-success" href="Account/Login">
+                        <NavLink class="nav-link btn btn-outline-secondary" href="Account/Login">
                             <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
                         </NavLink>
                     </li>
