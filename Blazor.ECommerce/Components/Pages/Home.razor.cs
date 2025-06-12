@@ -38,6 +38,13 @@ namespace Blazor.ECommerce.Components.Pages
             {
                 FilteredProducts = Products;
                 _selectedCategoryId = categoryId;
+                return;
+            }
+            else
+            {
+                FilteredProducts = Products.Where(p => p.CategoryId == categoryId).ToList();
+                _selectedCategoryId = categoryId;
+                _searchText = string.Empty;
             }
         }
 
@@ -54,6 +61,11 @@ namespace Blazor.ECommerce.Components.Pages
             }
 
             _searchText = newValueOfSearchText;
+        }
+
+        private string GetSelectedCategoryStyle(int categoryId)
+        {
+            return _selectedCategoryId == categoryId ? "active" : string.Empty;
         }
     }
 }
