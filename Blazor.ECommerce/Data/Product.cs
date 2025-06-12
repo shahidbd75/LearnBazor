@@ -15,6 +15,7 @@ namespace Blazor.ECommerce.Data
 
         public string? SpecialTag { get; set; }
 
+        [Required(ErrorMessage = "Category is required.")]
         public int CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]
